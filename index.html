@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <title>I Love You 1 to 1000</title>
+  <style>
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  padding: 20px;
+  text-align: center;
+  min-height: 100vh;
+  background:linear-gradient(black,white,red,white,black);  
+color: #f0f0f0;
+}
+
+    .line {
+      font-size: 30px;
+	
+      margin: 3px 0;
+      white-space: pre-wrap;
+    }
+
+    .word {
+      opacity: 0;
+      display: inline-block;
+      transition: opacity 0.3s ease-in;
+    }
+
+    .word.visible {
+      opacity: 1;
+    }
+
+    #infinity-message {
+      font-size: 38px;
+      margin: 30px 0 0;
+      color: #c71585;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    #infinity-message.visible {
+      opacity: 1;
+    }
+.gradient-text {
+  background: linear-gradient(90deg, #ffb6c1, #c1d3ff, #b5ead7, #ffeaa7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+  </style>
+</head>
+<body>
+<body>
+  <div class="overlay"></div>
+  <div class="content">
+
+  <h1></h1>
+
+  <div id="love-container"></div>
+  <p id="infinity-message">I love you infinity ♾️💞🎀</p>
+
+  <script>
+    const container = document.getElementById("love-container");
+    const hearts = ["🩷", "💜", "🧡", "💛", "💚", "💙", "🖤", "❤️", "🤍", "🤎"];
+    const infinityMessage = document.getElementById("infinity-message");
+
+    let lineIndex = 1;
+    const wordDelay = 200;  // ms per word
+    const totalWordsPerLine = 6;
+
+    function showLineWords(i) {
+      return new Promise((resolve) => {
+        const heart = hearts[(i - 1) % hearts.length];
+        const line = document.createElement("div");
+        line.className = "line";
+        container.appendChild(line);
+
+        const words = [`I`, `love`, `you`, `Sawaira`, `${i}%`, `${heart}`];
+        let wordIndex = 0;
+
+        function showNextWord() {
+          if (wordIndex >= words.length) {
+            resolve();
+            return;
+          }
+
+          const span = document.createElement("span");
+          span.className = "word gradient-text";
+          span.textContent = words[wordIndex] + " ";
+          line.appendChild(span);
+
+          setTimeout(() => {
+            span.classList.add("visible");
+            wordIndex++;
+            showNextWord();
+          }, wordDelay);
+        }
+
+        showNextWord();
+      });
+    }
+
+    async function loopLines() {
+      for (let i = 1; i <= 1000; i++) {
+        await showLineWords(i);
+      }
+      // After all lines are done, show the final message
+      infinityMessage.classList.add("visible");
+    }
+
+    loopLines();
+  </script>
+  </div>
+</body>
+</html>
+
